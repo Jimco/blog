@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-  
-	<title>{{ page.title }}</title>
-  	
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>{{ page.title }}</title>
+    <meta name="title" content="前端那些事儿" />
+    <meta name="description" content="记录前端开发的那些事儿！" />
+    <link rel="stylesheet" href="{{ baseurl }}/style/index.css" />
+    <script src="script/jquery-1.8.0.min.js"></script>
+    <script src="script/posfix.js"></script>
+    
   </head>
   <body>
-
-	{{ content }}
+    <div id="header-frame" data-xy="posfix">
+    <div id="header">
+      <div><a id="logo" href="http://www.xiejiancong.com" title="前端那些事儿 - 记录前端开发的那些事儿！">前端那些事儿 - 记录前端开发的那些事儿！</a></div>
+      <ul id="menu">
+        <li><a href="http://www.xiejiancong.com">首页</a></li>
+      </ul>
+      <ul id="nav">
+        <li><a href="http://www.xiejiancong.com/readerwall/">读者墙</a></li>
+        <li><a href="http://www.xiejiancong.com/t/">碎语</a></li>
+        <li><a href="http://www.xiejiancong.com/guestbook/">留言</a></li>
+        <li><a href="http://www.xiejiancong.com/links/">友情链接</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="mainWrap wrap">{{ content }}</div>    
 
   </body>
-
-
 </html>
