@@ -16,9 +16,9 @@
   <body>
     <div id="header-frame" data-xy="posfix">
     <div id="header">
-      <div><a id="logo" href="http://www.xiejiancong.com" title="前端那些事儿 - 记录前端开发的那些事儿！">前端那些事儿 - 记录前端开发的那些事儿！</a></div>
+      <div><a id="logo" href="{{ site.baseurl }}" title="前端那些事儿 - 记录前端开发的那些事儿！">前端那些事儿 - 记录前端开发的那些事儿！</a></div>
       <ul id="menu">
-        <li><a href="http://www.xiejiancong.com">首页</a></li>
+        <li><a href="{{ site.baseurl }}">首页</a></li>
       </ul>
       <ul id="nav">
         <li><a href="http://www.xiejiancong.com/readerwall/">读者墙</a></li>
@@ -28,7 +28,9 @@
       </ul>
     </div>
   </div>
-  <div class="mainWrap wrap">{{ content }}</div>    
+  <div class="mainWrap wrap">
+    {{ content }}    
+  </div>    
 
   </body>
 </html>
