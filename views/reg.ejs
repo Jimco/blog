@@ -1,8 +1,17 @@
 <%- include header %>
   <%- include side %>
   
-  <article>
-    <p>Welcome to <%= title %></p>
-  </article>
+  <div class="xymain">
+    <%- include side %>
+    <div class="sso-box">
+      <form method="post">
+        <div class="input-line"><label><span>用户名：</span><input type="text" name="name"/></label></div>
+        <div class="input-line"><label><span>密码：</span><input type="password" name="password"/></label></div>
+        <div class="input-line"><label><span>确认密码：</span><input type="password" name="password2"/></label></div>
+        <div class="input-line"><label><span>邮箱：</span><input type="text" name="email"/></label></div>
+        <input type="submit" value="注册"/>
+      </form>
+    </div>
+  </div>
 
 <%- include footer %>
