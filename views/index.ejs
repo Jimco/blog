@@ -4,6 +4,8 @@
     <%- include side %>
     
     <article>
+      <% if(success){ %><div><%= success%></div><% } %>
+      <% if(error){ %><div><%= error%></div><% } %>
       <p>Welcome to <%= title %></p>
     </article>
   </div>
