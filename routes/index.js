@@ -3,8 +3,8 @@
  * GET home page.
  */
 
-var crypto = require('./crypto')
-  , User = require('../model/user');
+var crypto = require('crypto')
+  , User = require('../models/user');
 
 
 module.exports = function(app){
