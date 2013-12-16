@@ -19,11 +19,12 @@ module.exports = function(app){
 
   app.post('/reg', function (req, res) {
     var name = req.body.name
-      , password = req.body.name
+      , password = req.body.password
       , password2 = req.body.password2;
 
     if(password !== password2){
       req.flash('error', '两次输入的密码不一致！');
+      console.log('error', '两次输入的密码不一致！', password, password2);
       return res.redirect('/reg');
     }
 
@@ -39,16 +40,18 @@ module.exports = function(app){
     User.get(newUser.name, function(err, user){
       if(user){
         req.flash('error', '用户已存在！');
+        console.log('error', '用户已存在！', user);
         return res.redirect('/reg');
       }
 
-      User.save(function(err, user){
+      newUser.save(function(err, user){
         if (err) {
           req.flash('error', err);
           return res.redirect('/reg');
         }
         req.session.user = user;
         req.flash('success', '注册成功!');
+        console.log('success', '注册成功!', user);
         res.redirect('/');
       });
     });
