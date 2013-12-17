@@ -3,16 +3,19 @@
   <div class="xymain">
     <%- include side %>
     <div class="post-box">
-      <div class="opt-area">
-        <p>标题：</p>
-        <div class="input-line"><input type="text" placeholder="标题不能为空"></div>
-      </div>
-      <div class="cont-area">
-        <p>正文：</p>
-        <div class="cont-line">
-          <textarea name="contnet" id="content" cols="30" rows="10"></textarea>
+      <form method="post">
+        <div class="opt-area">
+          <p>标题：</p>
+          <div class="input-line"><input type="text" name="title" placeholder="标题不能为空"></div>
         </div>
-      </div>
+        <div class="cont-area">
+          <p>正文：</p>
+          <div class="cont-line">
+            <textarea name="post" id="post" cols="30" rows="10"></textarea>
+          </div>
+        </div>
+        <div class="btn-line"><input type="submit" value="发表"></div>
+      </form>
     </div>
   </div>
 
