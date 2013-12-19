@@ -10,7 +10,7 @@ var crypto = require('crypto')
 
 module.exports = function(app){
 
-  // 页面响应
+  // 首页
   app.get('/', function (req, res) {
     Post.get(null, function(err, posts){
       if(err) posts = [];
@@ -23,9 +23,6 @@ module.exports = function(app){
         error: req.flash('error').toString()
       });
     });
-
-
-      
   });
 
 
@@ -53,6 +50,18 @@ module.exports = function(app){
 
       req.flash('success', '发布成功！');
       res.redirect('/');
+    });
+  });
+
+
+  // 上传页面
+  qpp.get('/upload', checkLogin);
+  app.get('/upload', function (req,res){
+    res.render('upload', {
+      title: '文件上传',
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
     });
   });
 
