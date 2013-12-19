@@ -4,6 +4,7 @@
  */
 
 var crypto = require('crypto')
+  , fs = require('fs')
   , User = require('../models/user')
   , Post = require('../models/post');
 
@@ -37,7 +38,7 @@ module.exports = function(app){
     });
   });
 
-  app.get('/post', checkLogin);
+  app.post('/post', checkLogin);
   app.post('/post', function (req, res) {
     var currentUser = req.session.user
       , post = new Post(currentUser.name, req.body.title, req.body.post);
@@ -55,7 +56,7 @@ module.exports = function(app){
 
 
   // 上传页面
-  qpp.get('/upload', checkLogin);
+  app.get('/upload', checkLogin);
   app.get('/upload', function (req,res){
     res.render('upload', {
       title: '文件上传',
@@ -63,6 +64,27 @@ module.exports = function(app){
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
     });
+  });
+
+  app.post('/upload', checkLogin);
+  app.post('/upload', function (req, res){
+    for(var i in req.files){
+      if(req.files[i].size === 0){
+        // 使用同步方式删除一个文件
+        fs.unlimkSync(req.files[i].path);
+        console.log('Successfully removed an empty file !');
+      }
+      else{
+        var target_path = './path/upload/' + req.files[i].name;
+
+        // 使用同步方式重命名一个文件
+        fs.renameSync(req.files[i].path, target_path);
+        console.log('Successfully renamed a file !');
+      }
+    }
+
+    req.flash('success', '文件上传成功！');
+    res.redirect('/upload');
   });
 
 

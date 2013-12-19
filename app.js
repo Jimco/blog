@@ -20,8 +20,9 @@ app.set('view engine', 'ejs');
 app.use(flash());
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
+// app.use(express.json());
+// app.use(express.urlencoded());
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: './public/upload' }));
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({
