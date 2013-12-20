@@ -71,11 +71,12 @@ module.exports = function(app){
     for(var i in req.files){
       if(req.files[i].size === 0){
         // 使用同步方式删除一个文件
-        fs.unlimkSync(req.files[i].path);
+        fs.unlinkSync(req.files[i].path);
         console.log('Successfully removed an empty file !');
       }
       else{
         var target_path = './path/upload/' + req.files[i].name;
+        console.log(req.files[i].path, req.files[i].name);
 
         // 使用同步方式重命名一个文件
         fs.renameSync(req.files[i].path, target_path);
