@@ -53,7 +53,7 @@ Post.prototype.save = function(callback){
   });
 }
 
-// 读取文章及其相关信息
+// 读取所有文章
 Post.getAll = function(name, callback){
   mongodb.open(function(err, db){
     if(err) return callback(err);
@@ -87,20 +87,21 @@ Post.getAll = function(name, callback){
   });
 }
 
+// 读取1篇文章
 Post.getOne = function(name, day, title, callback){
   mongodb.open(function(err, db){
     if(err) return callback(err);
 
-    db.collection('post', function(err, collection){
+    db.collection('posts', function(err, collection){
       if(err){
         mongodb.close();
         return callback(err);
       }
 
       collection.findOne({
-        "name": name,
-        "time.day": day,
-        "title": title
+        'name': name,
+        'time.day': day,
+        'title': title
       }, function(err, doc){
         mongodb.close();
         if(err) return callback(err);
