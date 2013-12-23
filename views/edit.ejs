@@ -1,0 +1,22 @@
+<%- include header %>
+
+  <div class="xymain">
+    <%- include side %>
+    <div class="post-box">
+      <form method="post">
+        <div class="opt-area">
+          <p>标题：</p>
+          <div class="input-line"><input type="text" name="title" value="<%= post.title %>" disabled="disabled"></div>
+        </div>
+        <div class="cont-area">
+          <p>正文：</p>
+          <div class="cont-line">
+            <textarea name="post" cols="30" rows="10"><%= post.post %></textarea>
+          </div>
+        </div>
+        <div class="btn-line"><input type="submit" value="保存修改"></div>
+      </form>
+    </div>
+  </div>
+
+<%- include footer %>
