@@ -1,0 +1,34 @@
+<div class="comm-wrap">
+  <ul class="comm-list">
+    <% post.comments.forEach(function(comment, index){ %>
+    <li>
+      <div class="comm-meta">
+        <span class="user"><a href="<%= comment.website %>" target="_blank"><%= comment.name %></a></span>
+        <span class="date"><%= comment.time %></span>
+      </div>
+      <div class="comm-cont">
+        <%- comment.content %>
+      </div>
+    </li>
+    <% }) %>
+  </ul>
+  
+  <div class="comm-pub-box">
+    <form method="post">
+      <% if(user){ %>
+      <div class="input-line"><label><span>姓名：</span><input type="text" name="name" value="<%= user.name %>"></label></div>
+      <div class="input-line"><label><span>邮箱：</span><input type="text" name="email" value="<%= user.email %>"></label></div>
+      <div class="input-line"><label><span>网址：</span><input type="text" name="website" value="/u/<%= user.name %>"></label></div>
+      <% }else{ %>
+      <div class="input-line"><label><span>姓名：</span><input type="text" name="name"></label></div>
+      <div class="input-line"><label><span>邮箱：</span><input type="text" name="email"></label></div>
+      <div class="input-line"><label><span>网址：</span><input type="text" name="website"></label></div>
+      <% } %>
+      <div class="txt-line">
+        <textarea name="content" cols="80" rows="5"></textarea>
+      </div>
+      <div class="input-line"><input type="submit" value="留言"></div>
+    </form>
+  </div>
+  
+</div>

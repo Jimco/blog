@@ -25,7 +25,8 @@ Post.prototype.save = function(callback){
       name: this.name,
       time: time,
       title: this.title,
-      post: this.post
+      post: this.post,
+      comments: []
     };
 
   // 打开数据库
@@ -95,13 +96,19 @@ Post.getOne = function(name, day, title, callback){
       }
 
       collection.findOne({
-        'name': name,
-        'time.day': day,
-        'title': title
+        "name": name,
+        "time.day": day,
+        "title": title
       }, function(err, doc){
         mongodb.close();
         if(err) return callback(err);
-        doc.post = markdown.toHTML(doc.post);
+        // doc.post = markdown.toHTML(doc.post);
+        if(doc){
+          doc.post = markdown.toHTML(doc.post);
+          doc.comments.forEach(function(comment){
+            comment.content = markdown.toHTML(comment.content);
+          });
+        }
         callback(null, doc);
       });
     });
@@ -120,9 +127,9 @@ Post.edit = function(name, day, title, callback) {
       }
       
       collection.findOne({
-        'name': name,
-        'time.day': day,
-        'title': title
+        "name": name,
+        "time.day": day,
+        "title": title
       }, function(err, doc){
         mongodb.close();
         if(err) return callback(err);
@@ -144,9 +151,9 @@ Post.update = function(name, day, title, post, callback){
       }
       
       collection.update({
-        'name': name,
-        'time.day': day,
-        'title': title
+        "name": name,
+        "time.day": day,
+        "title": title
       }, {
         $set: {post: post}
       }, function (err) {
@@ -170,9 +177,9 @@ Post.remove = function(name, day, title, callback){
       }
 
       collection.remove({
-        'name': name,
-        'time.day': day,
-        'title': title
+        "name": name,
+        "time.day": day,
+        "title": title
       }, {
         w: 1
       }, function(err){
