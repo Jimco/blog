@@ -115,6 +115,67 @@ Post.getOne = function(name, day, title, callback){
   });
 };
 
+// 读取10篇文章
+Post.getTen = function(name, page, callback){
+  mongodb.open(function(err, db){
+    if(err) return callback(err);
+
+    db.collection('posts', function(err, collection){
+      if(err){
+        mongodb.close();
+        return callback(err);
+      }
+
+      var query = {};
+      if(name) query.name = name;
+
+      collection.count(query, function(err, total){
+        // 根据 query 对象查询，并跳过前 (page - 1)*
+        collection.find(query, {
+          skip: (page - 1)*10,
+          limit: 10
+        }).sort({
+          time: -1
+        }).toArray(function(err, docs){
+          mongodb.close();
+          if(err) return callback(err);
+          docs.forEach(function(doc){
+            doc.post = markdown.toHTML(doc.post);
+          });
+
+          callback(null, docs, total);
+        });
+      });
+    });
+  });
+}
+
+// 读取文章存档信息
+Post.getArchive = function(callback){
+  mongodb.open(function(err, db){
+    if(err) return callback(err);
+
+    db.collection('posts', function(err, collection){
+      if(err){
+        mongodb.close();
+        return callback(err);
+      }
+
+      collection.find({}, {
+        "name": 1,
+        "time": 1,
+        "title": 1
+      }).sort({
+        time: -1
+      }).toArray(function(err, docs){
+        mongodb.close();
+        if(err) return callback(err);
+        callback(null, docs);
+      });
+    });
+  });
+}
+
 // 编辑内容
 Post.edit = function(name, day, title, callback) {
   mongodb.open(function(err, db){
