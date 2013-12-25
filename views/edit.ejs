@@ -5,8 +5,16 @@
     <div class="post-box">
       <form method="post">
         <div class="opt-area">
-          <p>标题：</p>
-          <div class="input-line"><input type="text" name="title" value="<%= post.title %>" disabled="disabled"></div>
+          <div class="input-line"><label><span>标题：</span><input type="text" name="title" value="<%= post.title %>" disabled="disabled"></label></div>
+          <div class="input-line">
+            <label>
+              <span>标签：</span>
+              <input type="text" name="tag1" value="<%= post.tags[0] %>" disabled="disabled">
+              <input type="text" name="tag2" value="<%= post.tags[1] %>" disabled="disabled">
+              <input type="text" name="tag3" value="<%= post.tags[2] %>" disabled="disabled">
+            </label>
+          </div>
+
         </div>
         <div class="cont-area">
           <p>正文：</p>

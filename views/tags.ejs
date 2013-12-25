@@ -1,0 +1,12 @@
+<%- include header %>
+
+  <div class="xymain">
+    <%- include side %>
+    <div class="tags-box">
+      <% posts.forEach(function(tag, index){ %>
+        <a href="/tags/<%= tag %>"><%= tag %></a>
+      <% }) %>
+    </div>
+  </div>
+
+<%- include footer %>
