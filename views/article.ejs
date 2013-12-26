@@ -13,6 +13,8 @@
             <% if(tag){ %><a href="/tags/<%= tag %>"><%= tag %></a><% } %>
           <% }) %>
         </span>
+        <span class="views">浏览：<%= post.pv %></span>
+            <span class="views">评论：<%= post.comments.length %></span>
         <% if(user && (user.name === post.name)){ %>
         <span class="edit"><a href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">编辑</a></span>
         <span class="delete"><a href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">删除</a></span>
