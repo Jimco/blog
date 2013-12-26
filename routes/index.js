@@ -129,6 +129,36 @@ module.exports = function(app){
   });
 
 
+  // 搜索页面
+  app.get('/search', function(req, res){
+    Post.search(req.query.keyworkd, function(err, posts){
+      if(err){
+        req.flash('err', err);
+        return res.redirect('/');
+      }
+
+      res.render('search', {
+        title: '搜索：' + req.query.keyworkd,
+        posts: posts,
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+    });
+  });
+
+
+  // 友情链接页面
+  app.get('/links', function(req, res){
+    res.render('links', {
+      title: '友情链接',
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+    });
+  });
+
+
   // 文章页面
   app.get('/u/:name/:day/:title', function(req, res){
     Post.getOne(req.params.name, req.params.day, req.params.title, function(err, post){
@@ -419,6 +449,11 @@ module.exports = function(app){
     res.redirect('/'); // 登出成功后跳转到主页
   });
 
+
+  // 404 页面
+  app.use(function(req, res){
+    res.render('404');
+  });
 
 
   function checkLogin(req, res, next){
