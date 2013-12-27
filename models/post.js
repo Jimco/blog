@@ -350,3 +350,17 @@ Post.search = function(keyword, callback){
     });
   });
 }
+
+// 转载
+Post.reprint = function(reprint_from, reprint_to, callback){
+  mongodb.open(function(err, db){
+    if(err) return callback(err);
+
+    db.collection('posts', function(err, collection){
+      if(err){
+        mongodb.close();
+        return callback(err);
+      }
+    });
+  });
+}
