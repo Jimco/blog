@@ -1,4 +1,5 @@
-var mongodb = require('./db')
+var settings = require('../settings')
+  , mongodb = require('mongodb').Db
   , crypto = require('crypto');
 
 function User(user){
@@ -22,20 +23,20 @@ User.prototype.save = function(callback){
       headface: headface
     };
   // 打开数据库
-  mongodb.open(function(err, db){
+  mongodb.connect(settings.url, function(err, db){
     if(err) return callback(err); // 错误，返回 err 信息
 
     // 读取 users 集合
     db.collection('users', function(err, collection){
       if(err){
-        mongodb.close();
+        db.close();
         return callback(err); // 错误，返回 err 信息
       }
       // 将用户数据插入 users 集合
       collection.insert(user, {
         safe: true
       }, function(err, user){
-        mongodb.close();
+        db.close();
         if(err) return callback(err);
         callback(null, user[0]); // 成功！err 为 null，并返回存储后的用户文档
       });
@@ -46,20 +47,20 @@ User.prototype.save = function(callback){
 //读取用户信息
 User.get = function(name, callback){
   // 打开数据库
-  mongodb.open(function(err, db){
+  mongodb.connect(settings.url, function(err, db){
     if(err) return callback(err); // 错误，返回 err 信息
 
     // 读取 users 集合
     db.collection('users', function(err, collection){
       if(err){
-        mongodb.close();
+        db.close();
         return callback(err); // 错误，返回 err 信息
       }
       // 查找用户名（name键）值为 name 一个文档
       collection.findOne({
         name: name
       }, function(err, user){
-        mongodb.close();
+        db.close();
         if(err) return callback(err); // 失败！返回 err
         callback(null, user); // 成功！返回查询的用户信息
       });
