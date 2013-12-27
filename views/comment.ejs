@@ -3,7 +3,10 @@
     <% post.comments.forEach(function(comment, index){ %>
     <li>
       <div class="comm-meta">
-        <span class="user"><a href="<%= comment.website %>" target="_blank"><%= comment.name %></a></span>
+        <span class="user">
+          <span class="headface"><img src="<%= comment.headface %>" alt="<%= comment.name %>"></span>
+          <a href="<%= comment.website %>" target="_blank"><%= comment.name %></a>
+        </span>
         <span class="date"><%= comment.time %></span>
       </div>
       <div class="comm-cont">

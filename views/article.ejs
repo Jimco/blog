@@ -9,8 +9,8 @@
         <span class="date">日期：<%= post.time.minute %></span>
         <span class="tags">
           标签：
-          <% post.tags.forEach(functino(tag, index){ %>
-            <% if(tag){ %><a href="/tags/<%= tag %>"><%= tag %></a><% } %>
+          <% post.tags.forEach(function(tag, index){ %>
+            <% if(tag){ %> <a class="tag" href="/tags/<%= tag %>"><%= tag %></a><% } %>
           <% }) %>
         </span>
         <span class="views">浏览：<%= post.pv %></span>

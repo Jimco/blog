@@ -1,8 +1,9 @@
 var mongodb = require('./db')
   , markdown = require('markdown').markdown;
 
-function Post(name, title, tags, post){
+function Post(name, headface, title, tags, post){
   this.name = name;
+  this.headface = headface;
   this.title = title;
   this.tags = tags;
   this.post = post;
@@ -24,6 +25,7 @@ Post.prototype.save = function(callback){
 
   var post = {
       name: this.name,
+      headface: this.headface,
       time: time,
       title: this.title,
       tags: this.tags,
@@ -331,7 +333,7 @@ Post.search = function(keyword, callback){
         return callback(err);
       }
 
-      var pattern = new RegExp("^.*" + keyword + ".*$", i);
+      var pattern = new RegExp("^.*" + keyword + ".*$", 'i');
       collection.find({
         "title": pattern
       }, {

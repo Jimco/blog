@@ -60,7 +60,7 @@ module.exports = function(app){
   app.post('/post', function (req, res) {
     var currentUser = req.session.user
       , tags = [ req.body.tag1, req.body.tag2, req.body.tag3 ]
-      , post = new Post(currentUser.name, req.body.title, tags, req.body.post);
+      , post = new Post(currentUser.name, currentUser.headface, req.body.title, tags, req.body.post);
 
     post.save(function(err){
       if(err){
@@ -131,7 +131,7 @@ module.exports = function(app){
 
   // 搜索页面
   app.get('/search', function(req, res){
-    Post.search(req.query.keyworkd, function(err, posts){
+    Post.search(req.query.keyword, function(err, posts){
       if(err){
         req.flash('err', err);
         return res.redirect('/');
@@ -167,6 +167,7 @@ module.exports = function(app){
         return res.redirect('/');
       }
 
+      console.log(post);
       res.render('article', {
         title: req.params.title,
         post: post,
@@ -177,12 +178,16 @@ module.exports = function(app){
     });
   });
 
-  app.post('/u/:name/:day/:title', function(req, res){
+  app.post('/u/:name/:day/:title', function(req, res){ // 评论接口
     var date = new Date()
-      , time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+      , time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
+      , md5 = crypto.createHash('md5')
+      , email_MD5 = md5.update(req.body.email.toLowerCase()).digest('hex')
+      , headface = 'http://www.gravatar.com/avatar/' + email_MD5 +'?s=48';
 
     var comment = {
         name: req.body.name,
+        headface: headface,
         email: req.body.email,
         website: req.body.website,
         time: time,
