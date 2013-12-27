@@ -361,6 +361,66 @@ Post.reprint = function(reprint_from, reprint_to, callback){
         mongodb.close();
         return callback(err);
       }
+
+      // 找到被转载的文章的原文档
+      collection.findOne({
+        "name": reprint_from.name,
+        "time.day": reprint_from.day,
+        "title": reprint_from.title
+      }, function(err, doc){
+        if(err){
+          mongodb.close();
+          return callback(err);
+        }
+
+        var date = new Date()
+          , time = {
+            date: date,
+            year : date.getFullYear(),
+            month : date.getFullYear() + "-" + (date.getMonth() + 1),
+            day : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
+            minute : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
+            date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())  
+          };
+
+        delete doc._id;
+        doc.name = reprint_to.name;
+        doc.headface = reprint_to.headface;
+        doc.time = time;
+        doc.title = (doc.title.search(/[转载]/) > -1) ? doc.title : '[转载]' + doc.title;
+        doc.comments = [];
+        doc.reprint_info = {"reprint_from": reprint_from};
+
+        // 更新被转载的原文档的 reprint_info 内的 reprint_to 
+        collection.update({
+          "name": reprint_from.name,
+          "time.day": reprint_from.day,
+          "title": reprint_from.title
+        }, {
+          $push: {
+            "reprint_info.reprint_to": {
+              "name": doc.name,
+              "day": time.day,
+              "title": doc.title
+            }
+          }
+        }, function(err){
+          if(err){
+            mongodb.close();
+            return callback(err);
+          }
+        });
+
+        // 将转载生成的副本修改后存入数据库，并返回存储的文档
+        collection.insert(doc, {
+          safe: true
+        }, function(err, post){
+          mongodb.close();
+          if(err) return callback(err);
+          callback(null, post[0]);
+        });
+
+      });
     });
   });
 }
