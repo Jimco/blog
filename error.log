@@ -1,0 +1,52 @@
+[Tue Dec 31 2013 17:50:19 GMT+0800 (中国标准时间)]/post/52c293581c5253101b000002
+TypeError: e:\workspace\Github\xyblog\views\article.ejs:6
+    4|     <%- include side %>
+    5|     <div class="post-box">
+ >> 6|       <h1><%= post.title %></h1>
+    7|       <div class="cont-meta">
+    8|         <span class="author">作者：<a href="/u/<%= post.name %>" title="<%= post.name %>"><%= post.name %></a></span>
+    9|         <span class="date">日期：<%= post.time.minute %></span>
+
+Cannot read property 'title' of null
+    at eval (eval at <anonymous> (e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:33:103)
+    at eval (eval at <anonymous> (e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:37:35)
+    at e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:250:15
+    at Object.exports.render (e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:288:13)
+    at View.exports.renderFile [as engine] (e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:318:20)
+    at View.render (e:\workspace\Github\xyblog\node_modules\express\lib\view.js:76:8)
+    at Function.app.render (e:\workspace\Github\xyblog\node_modules\express\lib\application.js:504:10)
+    at ServerResponse.res.render (e:\workspace\Github\xyblog\node_modules\express\lib\response.js:798:7)
+    at e:\workspace\Github\xyblog\routes\index.js:171:11
+    at e:\workspace\Github\xyblog\models\post.js:127:9
+[Tue Dec 31 2013 17:51:07 GMT+0800 (中国标准时间)]/post/52c293581c5253101b000002
+Error: db object already connecting, open cannot be called multiple times
+    at Db.open (e:\workspace\Github\xyblog\node_modules\mongodb\lib\mongodb\db.js:240:11)
+    at Function.Post.getOne (e:\workspace\Github\xyblog\models\post.js:95:11)
+    at e:\workspace\Github\xyblog\routes\index.js:164:10
+    at callbacks (e:\workspace\Github\xyblog\node_modules\express\lib\router\index.js:164:37)
+    at param (e:\workspace\Github\xyblog\node_modules\express\lib\router\index.js:138:11)
+    at param (e:\workspace\Github\xyblog\node_modules\express\lib\router\index.js:135:11)
+    at pass (e:\workspace\Github\xyblog\node_modules\express\lib\router\index.js:145:5)
+    at Router._dispatch (e:\workspace\Github\xyblog\node_modules\express\lib\router\index.js:173:5)
+    at Object.router (e:\workspace\Github\xyblog\node_modules\express\lib\router\index.js:33:10)
+    at next (e:\workspace\Github\xyblog\node_modules\express\node_modules\connect\lib\proto.js:193:15)
+[Tue Dec 31 2013 17:51:14 GMT+0800 (中国标准时间)]/post/52c293581c5253101b000002
+TypeError: e:\workspace\Github\xyblog\views\article.ejs:6
+    4|     <%- include side %>
+    5|     <div class="post-box">
+ >> 6|       <h1><%= post.title %></h1>
+    7|       <div class="cont-meta">
+    8|         <span class="author">作者：<a href="/u/<%= post.name %>" title="<%= post.name %>"><%= post.name %></a></span>
+    9|         <span class="date">日期：<%= post.time.minute %></span>
+
+Cannot read property 'title' of null
+    at eval (eval at <anonymous> (e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:33:103)
+    at eval (eval at <anonymous> (e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:237:14), <anonymous>:37:35)
+    at e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:250:15
+    at Object.exports.render (e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:288:13)
+    at View.exports.renderFile [as engine] (e:\workspace\Github\xyblog\node_modules\ejs\lib\ejs.js:318:20)
+    at View.render (e:\workspace\Github\xyblog\node_modules\express\lib\view.js:76:8)
+    at Function.app.render (e:\workspace\Github\xyblog\node_modules\express\lib\application.js:504:10)
+    at ServerResponse.res.render (e:\workspace\Github\xyblog\node_modules\express\lib\response.js:798:7)
+    at e:\workspace\Github\xyblog\routes\index.js:171:11
+    at e:\workspace\Github\xyblog\models\post.js:127:9

@@ -215,7 +215,7 @@ Post.edit = function(_id, callback) {
 };
 
 // 更新内容
-Post.update = function(_id, callback){
+Post.update = function(_id, post, callback){
   mongodb.open(function(err, db){
     if(err) return callback(err);
     

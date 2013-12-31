@@ -24,6 +24,7 @@ Comment.prototype.save = function(callback){
         return callback(err);
       }
 
+      console.log(_id);
       collection.update({
         "_id": new ObjectID(_id)
       }, {
