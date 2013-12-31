@@ -1,5 +1,6 @@
 var mongodb = require('./db')
-  , markdown = require('markdown').markdown;
+  , markdown = require('markdown').markdown
+  , ObjectID = require('mongodb').ObjectID;
 
 function Post(name, headface, title, tags, post){
   this.name = name;
@@ -90,7 +91,7 @@ Post.getAll = function(name, callback){
 };
 
 // 读取1篇文章
-Post.getOne = function(name, day, title, callback){
+Post.getOne = function(_id, callback){
   mongodb.open(function(err, db){
     if(err) return callback(err);
 
@@ -101,9 +102,7 @@ Post.getOne = function(name, day, title, callback){
       }
 
       collection.findOne({
-        "name": name,
-        "time.day": day,
-        "title": title
+        "_id": new ObjectID(_id)
       }, function(err, doc){
         if(err){
           mongodb.close();
@@ -112,9 +111,7 @@ Post.getOne = function(name, day, title, callback){
         if(doc){
           // pv+1
           collection.update({
-            "name": name,
-            "time.day": day,
-            "title": title
+            "_id": new ObjectID(_id)
           }, {
             $inc: {"pv": 1}
           }, function(err){
@@ -195,7 +192,7 @@ Post.getArchive = function(callback){
 }
 
 // 编辑内容
-Post.edit = function(name, day, title, callback) {
+Post.edit = function(_id, callback) {
   mongodb.open(function(err, db){
     if(err) return callback(err);
     
@@ -207,9 +204,7 @@ Post.edit = function(name, day, title, callback) {
       
       // 根据用户名、日期及文章名进行查询
       collection.findOne({
-        "name": name,
-        "time.day": day,
-        "title": title
+        "_id": new ObjectID(_id)
       }, function(err, doc){
         mongodb.close();
         if(err) return callback(err);
@@ -220,7 +215,7 @@ Post.edit = function(name, day, title, callback) {
 };
 
 // 更新内容
-Post.update = function(name, day, title, post, callback){
+Post.update = function(_id, callback){
   mongodb.open(function(err, db){
     if(err) return callback(err);
     
@@ -231,9 +226,7 @@ Post.update = function(name, day, title, post, callback){
       }
       
       collection.update({
-        "name": name,
-        "time.day": day,
-        "title": title
+        "_id": new ObjectID(_id)
       }, {
         $set: {post: post}
       }, function (err) {
@@ -246,7 +239,7 @@ Post.update = function(name, day, title, post, callback){
 };
 
 // 删除内容
-Post.remove = function(name, day, title, callback){
+Post.remove = function(_id, callback){
   mongodb.open(function(err, db){
     if(err) return callback(err);
 
@@ -257,9 +250,7 @@ Post.remove = function(name, day, title, callback){
       }
 
       collection.remove({
-        "name": name,
-        "time.day": day,
-        "title": title
+        "_id": new ObjectID(_id)
       }, {
         w: 1
       }, function(err){

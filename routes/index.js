@@ -160,8 +160,8 @@ module.exports = function(app){
 
 
   // 文章页面
-  app.get('/u/:name/:day/:title', function(req, res){
-    Post.getOne(req.params.name, req.params.day, req.params.title, function(err, post){
+  app.get('/post/:_id', function(req, res){
+    Post.getOne(req.params_id, function(err, post){
       if(err){
         req.flash('error', err);
         return res.redirect('/');
@@ -178,7 +178,7 @@ module.exports = function(app){
     });
   });
 
-  app.post('/u/:name/:day/:title', function(req, res){ // 评论接口
+  app.post('/post/:_id', function(req, res){ // 评论接口
     var date = new Date()
       , time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
       , md5 = crypto.createHash('md5')
@@ -191,10 +191,11 @@ module.exports = function(app){
         email: req.body.email,
         website: req.body.website,
         time: time,
-        content: req.body.content
+        content: req.body.content,
+        subcomments: []
       }
 
-    var newComment = new Comment(req.params.name, req.params.day, req.params.title, comment);
+    var newComment = new Comment(req.params._id, comment);
 
     newComment.save(function(err){
       if(err){
@@ -209,8 +210,8 @@ module.exports = function(app){
 
 
   // 编辑页面
-  app.get('/edit/:name/:day/:title', checkLogin);
-  app.get('/edit/:name/:day/:title', function(req, res){
+  app.get('/edit/:_id', checkLogin);
+  app.get('/edit/:_id', function(req, res){
     var currentUser = req.session.user;
 
     Post.edit(currentUser.name, req.params.day, req.params.title, function(err, post){
@@ -229,12 +230,12 @@ module.exports = function(app){
     });
   });
 
-  app.post('/edit/:name/:day/:title', checkLogin);
-  app.post('/edit/:name/:day/:title', function(req, res){
+  app.post('/edit/:_id', checkLogin);
+  app.post('/edit/:_id', function(req, res){
     var currentUser = req.session.user;
 
     Post.update(currentUser.name, req.params.day, req.params.title, req.body.post, function(err){
-      var url = '/u/' + req.params.name + '/' + req.params.day + '/' + req.params.title;
+      var url = '/post/' + req.params._id;
 
       if(err){
         req.flash('error', err);
@@ -303,11 +304,11 @@ module.exports = function(app){
 
 
   // 删除接口
-  app.get('/remove/:name/:day/:title', checkLogin);
-  app.get('/remove/:name/:day/:title', function(req, res){
+  app.get('/remove/:_id', checkLogin);
+  app.get('/remove/:_id', function(req, res){
     var currentUser = req.session.user;
 
-    Post.remove(currentUser.name, req.params.day, req.params.title, function(err){
+    Post.remove(req.params._id, function(err){
       if(err){
         req.flash('error', err);
         return res.redirect('back');

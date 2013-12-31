@@ -11,7 +11,7 @@
         <li><h3><%= post.time.year %></h3></li>
         <% lastYear = post.time.year } %>
         <li>
-          <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
+          <a href="/post/<%= post._id %>"><%= post.title %></a>
           <span>( <%= post.time.day %> )</span>
         </li>
       <% }) %>
