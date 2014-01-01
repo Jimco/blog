@@ -5,7 +5,7 @@ function Comment(_id, comment){
   // this.name = name;
   // this.day = day;
   // this.title = title;
-  this._id = new ObjectID(_id);
+  this._id = _id;
   this.comment = comment;
 }
 

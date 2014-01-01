@@ -114,6 +114,7 @@ module.exports = function(app){
           return res.redirect('/');
         }
 
+        console.log('user page...', user, page, total, posts);
         res.render('user', {
           title: user.name,
           posts: posts,
