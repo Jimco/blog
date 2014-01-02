@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>前端那些事儿 - 记录前端开发的那些事儿！</title>
+  <link type="text/css" rel="stylesheet" href="../public/css/xyreset.css" />
+  <link type="text/css" rel="stylesheet" href="../public/css/main.css" />
+
+</head>
+<body>
+  <div class="xymain">
+    <div class="sidebar">
+      <div class="logo"><h3 class="logo-txt"><a href="/" title="前端那些事儿">前端那些事儿</a></h3></div>
+      <div class="hr-line"></div>
+
+      <div class="side-menu">
+        <ul>
+          <li class="active"><a href="/" title="首页">首页</a></li>
+          <li><a href="/archive" title="存档">存档</a></li>
+          <li><a href="/tags" title="标签">标签</a></li>
+          <li><a href="/links" title="友情链接">友情链接</a></li>
+          <li><a href="/login" title="登录">登录</a></li>
+          <!-- <li><a href="/reg" title="注册">注册</a></li> -->
+          <!-- 已登录 -->
+          <li><a href="/upload" title="上传">上传</a></li>
+          <li><a href="/post" title="发布">发布</a></li>
+          <li><a href="/logout" title="登出">登出</a></li>
+        </ul>
+      </div>
+
+      <div class="widget">
+        <h2 class="widget-tit">关于</h2>
+        <div class="widget-cont">
+          <p>Node + Mongodb 博客程序</p>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-cont copyright">
+          <p>Copyright ©2014</p>
+          <p>All Rights Reserved. Powered By Jimco</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="main-wrap">
+      <div class="main-top">
+        <!-- <div class="global-tip"><p>登录成功！ / 登录失败！ / 网络忙，请稍后重试！</p></div> -->
+        <div class="timer"></div>
+      </div>
+      <!-- 
+      <div class="post-opt">
+        <a href="/delete" title="删除">删除</a>
+        <a href="/edit" title="编辑">编辑</a>
+        <a href="/" title="返回首页">返回首页</a>
+      </div>
+      -->
+      
+      <div class="post-wrap">
+        <ul>
+          <li>
+            <h1><a href="#" title="学会鄙视自己，才不会妥协">学会鄙视自己，才不会妥协</a></h1>
+            <div class="cont-meta">
+              <span class="author">
+                <span class="headface"><img src="../public/upload/1084-mbugoq.jpg" width="35px" height="35px" alt="Jimco"></span>
+                <a href="/u/Jimco" title="Jimco">Jimco</a>
+              </span>
+              <span class="date">日期：2014-01-01</span>
+              <span class="tags">
+                标签：
+                <a href="/tags/标签1">标签1</a>
+                <a href="/tags/标签1">标签2</a>
+                <a href="/tags/标签1">标签3</a>
+              </span>
+              <span class="views">浏览：1024</span>
+              <span class="commnums">评论：1024</span>
+            </div>
+            <div class="cont-abstract">
+              人生的容量是有限的，我们不能紧紧抓住我们所拥有过的所有的东西，哪怕是回忆，最终能保留的也只是漫长回忆里的最珍贵的一部分。所以，我们总是选择性的，甚至被强迫性的放弃和丢掉一些东西，而一路走下去，我们又会主动的去找寻，或者与一些东西不期而遇。我们无法改变过去，更无法控制未来，然而，我们可以为自己选择一种态度，它的名字叫“勇敢”。
+            </div>
+          </li>
+        </ul>  
+      </div>
+    </div>
+
+  </div>
+  
+  <script src="../public/js/jquery-1.8.3.min.js"></script>
+  <script src="../public/js/sea.js"></script>
+  <script>
+    jQuery(function($){
+      setInterval(
+        function() {
+          var date = new Date();
+          var aMonth = new Array("January","February","March","April","May","June","July","August","September","October","November","December")
+          var days = date.getDate();
+          var months = date.getMonth();
+          var seconds = date.getSeconds();
+          var minutes = date.getMinutes();
+          var hours = date.getHours();
+          printTime(days,aMonth[months],hours,minutes,seconds);
+        }, 1000
+      );
+      function printTime(days, months, hours, minutes, seconds){
+        var inner = '';
+        inner += '<span class="time_section"><span class="time_amount">'+days+'</span><br>'+months+'</span>';
+        inner += '<span class="time_section"><span class="time_amount">'+hours+'</span><br>Hour</span>';
+        inner += '<span class="time_section"><span class="time_amount">'+minutes+'</span><br>Minute</span>';
+        inner += '<span class="time_section"><span class="time_amount">'+seconds+'</span><br>Second</span>';
+        $('.timer').html(inner);
+      }
+
+      // jQuery('div.box').fadeIn(150);
+    });
+  </script>
+</body>
+</html>
