@@ -46,7 +46,12 @@
     <div class="main-wrap">
       <div class="main-top">
         <!-- <div class="global-tip"><p>登录成功！ / 登录失败！ / 网络忙，请稍后重试！</p></div> -->
-        <div class="timer"></div>
+        <div class="timer">
+          <span class="time_section"><span class="time_amount">20</span><br>January</span>
+          <span class="time_section"><span class="time_amount">13</span><br>Hour</span>
+          <span class="time_section"><span class="time_amount">20</span><br>Minute</span>
+          <span class="time_section"><span class="time_amount">14</span><br>Second</span>
+        </div>
       </div>
       <!-- 
       <div class="post-opt">
@@ -115,16 +120,17 @@
     jQuery(function($){
       setInterval(
         function() {
-          var date = new Date();
-          var aMonth = new Array("January","February","March","April","May","June","July","August","September","October","November","December")
-          var days = date.getDate();
-          var months = date.getMonth();
-          var seconds = date.getSeconds();
-          var minutes = date.getMinutes();
-          var hours = date.getHours();
-          printTime(days,aMonth[months],hours,minutes,seconds);
-        }, 1000
-      );
+          var date = new Date()
+            , aMonth = ['January','February','March','April','May','June','July','August','September','October','November','December']
+            , days = date.getDate()
+            , months = date.getMonth()
+            , seconds = date.getSeconds()
+            , minutes = date.getMinutes()
+            , hours = date.getHours();
+
+          printTime(days, aMonth[months], hours, minutes, seconds);
+        }, 1000);
+
       function printTime(days, months, hours, minutes, seconds){
         var inner = '';
         inner += '<span class="time_section"><span class="time_amount">'+days+'</span><br>'+months+'</span>';
