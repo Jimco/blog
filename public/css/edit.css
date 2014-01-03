@@ -1,0 +1,29 @@
+/* Main */
+body{background:#DADEE2;}
+.pb-wrap{width:900px;margin:20px auto;overflow:hidden;zoom:1;}
+.pb-main{float:left;width:658px;border:1px solid #c9cbcc;border-radius:5px;background:#F6F6F6;}
+.pb-main h2{padding:10px 28px;border-bottom:1px solid #e1e1e1;color:#124062;font-size:18px;font-weight:bold;}
+.pb-post-area{padding:20px;}
+
+.pb-title-holder{margin:0 0 25px;}
+.pb-title, .pb-mod-title{margin:0 0 10px;color:#5c5c5c;font-size:16px;}
+.pb-title-input, .pb-text-area{width:602px;padding:7px;font-size:18px;border:1px solid #ddd;border-top:1px solid #ebebeb;border-bottom:1px solid #b7b7b7;border-radius:3px;}
+.pb-title-input{line-height:24px;}
+.pb-text-area{height:315px;resize:vertical;}
+
+.pb-opt-holder{margin:20px 0 0;}
+.pb-cancel, .pb-submit{display:inline-block;width:75px;height:32px;line-height:32px;background:#E3E3E3;text-align:center;color:#7c7c7c;border-radius:3px;}
+.pb-cancel:hover{background:#C4C4C4;color:#444;}
+.pb-submit{float:right;border:0;background:#3498db;color:#fff;cursor:pointer;}
+.pb-submit:hover{background:#5dade2;}
+.pb-submit:active{background:#2383c4;}
+
+
+.pb-aside{float:left;width:229px;margin:20px 0 0;padding:20px 0;border:1px solid #c9cbcc;border-left:0;border-radius:0 5px 5px 0;background:#D6D8DB;}
+.pb-mod{padding:0 15px;}
+.post-tag-holder{padding:10px;border:1px solid #ddd;background:#fff;}
+.pb-mod-title{font-size:14px;}
+.post-tag-holder textarea{width:100%;height:95px;border:0;resize:none;}
+
+
+
