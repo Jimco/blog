@@ -1,37 +1,193 @@
 <div class="comm-wrap">
-  <ul class="comm-list">
-    <% post.comments.forEach(function(comment, index){ %>
-    <li>
-      <div class="comm-meta">
-        <span class="user">
-          <span class="headface"><img src="<%= comment.headface %>" alt="<%= comment.name %>"></span>
-          <a href="<%= comment.website %>" target="_blank"><%= comment.name %></a>
-        </span>
-        <span class="date"><%= comment.time %></span>
-      </div>
-      <div class="comm-cont">
-        <%- comment.content %>
-      </div>
-    </li>
-    <% }) %>
-  </ul>
-  
-  <div class="comm-pub-box">
+  <div class="top-reply-box">
     <form method="post">
-      <% if(user){ %>
-      <div class="input-line"><label><span>姓名：</span><input type="text" name="name" value="<%= user.name %>"></label></div>
-      <div class="input-line"><label><span>邮箱：</span><input type="text" name="email" value="<%= user.email %>"></label></div>
-      <div class="input-line"><label><span>网址：</span><input type="text" name="website" value="/u/<%= user.name %>"></label></div>
-      <% }else{ %>
-      <div class="input-line"><label><span>姓名：</span><input type="text" name="name"></label></div>
-      <div class="input-line"><label><span>邮箱：</span><input type="text" name="email"></label></div>
-      <div class="input-line"><label><span>网址：</span><input type="text" name="website"></label></div>
-      <% } %>
+      <div class="reply-info">
+        <% if(user){ %>
+        <div class="input-line"><input type="text" name="name" value="<%= user.name %>"></div>
+        <div class="input-line"><input type="text" name="email" value="<%= user.email %>"></div>
+        <div class="input-line"><input type="text" name="website" value="<%= user.website %>"></div>
+        <% }else{ %>
+        <div class="input-line"><input type="text" name="name" placeholder="姓名"></div>
+        <div class="input-line"><input type="text" name="email" placeholder="邮箱"></div>
+        <div class="input-line"><input type="text" name="website" placeholder="网址"></div>
+        <% } %>
+      </div>                  
       <div class="txt-line">
-        <textarea name="content" cols="80" rows="5"></textarea>
+        <!-- <a class="headface" href="javascript:void(0);"><img src="../public/upload/1084-mbugoq.jpg" width="30px" height="30px" alt="Jimco"></a> -->
+        <div class="reply-box-cont">
+          <textarea name="content" placeholder="说点什么吧..."></textarea>
+        </div>
+        <div class="pub-toolbar">
+          <button type="submit" class="pub-btn">发布</button>
+          <a href="javascript:void(0);" class="add-emote" title="插入表情">表情</a>
+        </div>
       </div>
-      <div class="input-line"><input type="submit" value="留言"></div>
+      
     </form>
   </div>
-  
+
+  <div class="comm-list">
+    <div class="comm-hot-bar"><span>最新评论</span></div>
+    <ul>
+      <% post.comments.forEach(function(comment, index){ %>
+      <li>
+        <div class="comm-self">
+          <div class="comm-avatar">
+            <a href="<%= comment.website %>" title="<%= comment.name %>"><img src="<%= comment.headface %>" width="46px" height="46px" alt="<%= comment.name %>"></a>
+          </div>
+          <div class="comm-body">
+            <div class="comm-puber"><a href="<%= comment.website %>" title="<%= comment.name %>"><%= comment.name %></a></div>
+            <div class="comm-cont"><%- comment.content %></div>
+            <div class="comm-meta">
+              <span class="comm-time"><%= comment.time %></span>
+              <a class="upvote" href="javascript:void(0);" title="赞">赞</a>
+              <a class="comm-reply" href="javascript:void(0);" title="回复">回复</a>
+            </div>
+          </div>
+
+        </div>
+      </li>
+      <% }) %>
+
+      <li>
+        <div class="comm-self">
+          <div class="comm-avatar">
+            <a href="#" title="Jimco"><img src="../public/upload/1084-mbugoq.jpg" width="46px" height="46px" alt="Jimco"></a>
+          </div>
+          <div class="comm-body">
+            <div class="comm-puber"><a href="#" title="Jimco">Jimco</a></div>
+            <div class="comm-cont"><p>请问右侧的标签怎么改成随机显示 20 个，就是有限制的，不要全部显示出来的？</p></div>
+            <div class="comm-meta">
+              <span class="comm-time">2014-01-01 20:13:14</span>
+              <a class="upvote" href="javascript:void(0);" title="赞">赞</a>
+              <a class="comm-reply" href="javascript:void(0);" title="回复">回复</a>
+            </div>
+          </div>
+
+        </div>
+        <ul class="comm-children">
+          <li>
+            <div class="comm-self">
+              <div class="comm-avatar">
+                <a href="#" title="Jimco"><img src="../public/upload/1084-mbugoq.jpg" width="46px" height="46px" alt="Jimco"></a>
+              </div>
+              <div class="comm-body">
+                <div class="comm-puber"><a href="#" title="Jimco">Jimco</a></div>
+                <div class="comm-cont"><p>请问右侧的标签怎么改成随机显示 20 个，就是有限制的，不要全部显示出来的？</p></div>
+                <div class="comm-meta">
+                  <span class="comm-time">2014-01-01 20:13:14</span>
+                  <a class="upvote" href="javascript:void(0);" title="赞">赞</a>
+                  <a class="comm-reply" href="javascript:void(0);" title="回复">回复</a>
+                </div>
+              </div>
+
+              <div class="sub-reply-box">
+                <form method="post">
+                  <div class="reply-info">
+                    <div class="input-line"><input type="text" name="name" placeholder="姓名"></div>
+                    <div class="input-line"><input type="text" name="email" placeholder="邮箱"></div>
+                    <div class="input-line"><input type="text" name="website" placeholder="网址"></div>
+                  </div>                  
+                  <div class="txt-line">
+                    <!-- <a class="headface" href="javascript:void(0);"><img src="../public/upload/1084-mbugoq.jpg" width="30px" height="30px" alt="Jimco"></a> -->
+                    <div class="reply-box-cont">
+                      <textarea name="content"></textarea>
+                    </div>
+                    <div class="pub-toolbar">
+                      <button type="submit" class="pub-btn">发布</button>
+                      <a href="javascript:void(0);" class="add-emote" title="插入表情">表情</a>
+                    </div>
+                  </div>
+                  
+                </form>
+              </div>
+
+            </div>
+
+            <ul class="comm-children">
+              <li>
+                <div class="comm-self">
+                  <div class="comm-avatar">
+                    <a href="#" title="Jimco"><img src="../public/upload/1084-mbugoq.jpg" width="46px" height="46px" alt="Jimco"></a>
+                  </div>
+                  <div class="comm-body">
+                    <div class="comm-puber"><a href="#" title="Jimco">Jimco</a></div>
+                    <div class="comm-cont"><p>请问右侧的标签怎么改成随机显示 20 个，就是有限制的，不要全部显示出来的？</p></div>
+                    <div class="comm-meta">
+                      <span class="comm-time">2014-01-01 20:13:14</span>
+                      <a class="upvote" href="javascript:void(0);" title="赞">赞</a>
+                      <a class="comm-reply" href="javascript:void(0);" title="回复">回复</a>
+                    </div>
+                  </div>
+
+                  <div class="sub-reply-box">
+                    <form method="post">
+                      <div class="reply-info">
+                        <div class="input-line"><input type="text" name="name" placeholder="姓名"></div>
+                        <div class="input-line"><input type="text" name="email" placeholder="邮箱"></div>
+                        <div class="input-line"><input type="text" name="website" placeholder="网址"></div>
+                      </div>                  
+                      <div class="txt-line">
+                        <!-- <a class="headface" href="javascript:void(0);"><img src="../public/upload/1084-mbugoq.jpg" width="30px" height="30px" alt="Jimco"></a> -->
+                        <div class="reply-box-cont">
+                          <textarea name="content"></textarea>
+                        </div>
+                        <div class="pub-toolbar">
+                          <button type="submit" class="pub-btn">发布</button>
+                          <a href="javascript:void(0);" class="add-emote" title="插入表情">表情</a>
+                        </div>
+                      </div>
+                      
+                    </form>
+                  </div>
+
+                </div>
+              </li>
+            </ul>
+
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="comm-self">
+          <div class="comm-avatar">
+            <a href="#" title="Jimco"><img src="../public/upload/1084-mbugoq.jpg" width="46px" height="46px" alt="Jimco"></a>
+          </div>
+          <div class="comm-body">
+            <div class="comm-puber"><a href="#" title="Jimco">Jimco</a></div>
+            <div class="comm-cont"><p>请问右侧的标签怎么改成随机显示 20 个，就是有限制的，不要全部显示出来的？</p></div>
+            <div class="comm-meta">
+              <span class="comm-time">2014-01-01 20:13:14</span>
+              <a class="upvote" href="javascript:void(0);" title="赞">赞</a>
+              <a class="comm-reply" href="javascript:void(0);" title="回复">回复</a>
+            </div>
+          </div>
+          
+          <div class="sub-reply-box">
+            <form method="post">
+              <div class="reply-info">
+                <div class="input-line"><input type="text" name="name" placeholder="姓名"></div>
+                <div class="input-line"><input type="text" name="email" placeholder="邮箱"></div>
+                <div class="input-line"><input type="text" name="website" placeholder="网址"></div>
+              </div>                  
+              <div class="txt-line">
+                <!-- <a class="headface" href="javascript:void(0);"><img src="../public/upload/1084-mbugoq.jpg" width="30px" height="30px" alt="Jimco"></a> -->
+                <div class="reply-box-cont">
+                  <textarea name="content"></textarea>
+                </div>
+                <div class="pub-toolbar">
+                  <button type="submit" class="pub-btn">发布</button>
+                  <a href="javascript:void(0);" class="add-emote" title="插入表情">表情</a>
+                </div>
+              </div>
+              
+            </form>
+          </div>
+
+        </div>
+      </li>
+      
+    </ul>
+  </div>
 </div>

@@ -1,39 +1,48 @@
 <%- include header %>
 
-  <div class="xymain">
-    <%- include side %>
-    
-    <div class="main-wrap">
-      <ul>
-      <% posts.forEach(function(post, index){ %>
+  <%- include side %>
+  
+  <div class="main-wrap">
+    <div class="main-top">
+      <!-- <div class="global-tip"><p>登录成功！ / 登录失败！ / 网络忙，请稍后重试！</p></div> -->
+      <div class="timer">
+        <span class="time_section"><span class="time_amount">20</span><br>January</span>
+        <span class="time_section"><span class="time_amount">13</span><br>Hour</span>
+        <span class="time_section"><span class="time_amount">20</span><br>Minute</span>
+        <span class="time_section"><span class="time_amount">14</span><br>Second</span>
+      </div>
+    </div>
+
+    <div class="post-wrap">
+      <ul class="post-list">
+        <% posts.forEach(function(post, index){ %>
         <li>
-          <h1><a href="/post/<%= post._id %>" title="<%= post.title %>"><%= post.title %></a></h1>
+          <h1 class="cont-tit"><a href="/post/<%= post._id %>" title="<%= post.title %>"><%= post.title %></a></h1>
+          <div class="cont-abstract">
+            <%- post.post %>
+          </div>
           <div class="cont-meta">
-            <span class="author">
-              <span class="headface"><img src="<%= post.headface %>" alt="<%= post.name %>"></span>
+            <!-- <span class="author">
+              <span class="headface"><img src="<%= post.headface %>" width="35px" height="35px" alt="<%= post.name %>"></span>
               <a href="/u/<%= post.name %>" title="<%= post.name %>"><%= post.name %></a>
-            </span>
-            <span class="date">日期：<%= post.time.minute %></span>
+            </span> -->
             <span class="tags">
-              标签：
-              标签：
+              Tags: 
               <% post.tags.forEach(function(tag, index){ %>
                 <% if(tag){ %><a href="/tags/<%= tag %>"><%= tag %></a><% } %>
               <% }) %>
             </span>
-            <span class="views">浏览：<%= post.pv %></span>
-            <span class="commnums">评论：<%= post.comments.length %></span>
-          </div>
-          <div class="cont-abstract">
-            <%- post.post %>
+            <span class="date"><%= post.time.minute %></span>
+            <span class="views"><%= post.pv %> 浏览</span>
+            <span class="commnums"><%= post.comments.length %> 评论</span>
           </div>
         </li>
-      <% }) %>  
+        <% }) %> 
       </ul>
 
       <%- include pagenav %>
     </div>
-    
+
   </div>
 
 <%- include footer %>

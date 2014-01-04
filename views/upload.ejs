@@ -1,19 +1,16 @@
 <%- include header %>
-  
-  <div class="xymain">
-    <%- include side %>
 
-    <div class="main-wrap">
-      <form method="post" action="/upload" enctype="multipart/form-data">
-        <input type="file" name="file1" /><br>
-        <input type="file" name="file2" /><br>
-        <input type="file" name="file3" /><br>
-        <input type="file" name="file4" /><br>
-        <input type="file" name="file5" /><br>
-        <input type="submit" value="上传">
-      </form>
-    </div>
+  <%- include side %>
 
+  <div class="main-wrap">
+    <form method="post" action="/upload" enctype="multipart/form-data">
+      <input type="file" name="file1" /><br>
+      <input type="file" name="file2" /><br>
+      <input type="file" name="file3" /><br>
+      <input type="file" name="file4" /><br>
+      <input type="file" name="file5" /><br>
+      <input type="submit" value="上传">
+    </form>
   </div>
 
 <%- include footer %>

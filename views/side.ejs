@@ -1,14 +1,38 @@
-<nav>
-  <span><a title="首页" href="/">首页</a></span>
-  <span><a title="存档" href="/archive">存档</a></span>
-  <span><a title="标签" href="/tags">标签</a></span>
-  <span><a title="友情链接" href="/links">友情链接</a></span>
-  <% if(user){ %>
-  <span><a title="上传" href="/upload">上传</a></span>
-  <span><a title="发布" href="/post">发布</a></span>
-  <span><a title="登出" href="/logout">登出</a></span>
-  <% }else{ %>
-  <span><a title="登录" href="/login">登录</a></span>
-  <span><a title="注册" href="/reg">注册</a></span>
-  <% } %>
-</nav>
+  <div class="sidebar">
+    <div class="logo"><h3 class="logo-txt"><a href="/" title="前端那些事儿">前端那些事儿</a></h3></div>
+
+    <div class="side-menu">
+      <ul>
+        <li class="active"><a href="/" title="首页">首页</a></li>
+        <li><a href="/archive" title="存档">存档</a></li>
+        <li><a href="/tags" title="标签">标签</a></li>
+        <li><a href="/links" title="友情链接">友情链接</a></li>
+        <li><a href="/login" title="登录">登录</a></li>
+        <!-- <li><a href="/reg" title="注册">注册</a></li> -->
+        <!-- 已登录 -->
+        <% if(user){ %>
+        <li><a href="/upload" title="上传">上传</a></li>
+        <li><a href="/post" title="发布">发布</a></li>
+        <li><a href="/logout" title="登出">登出</a></li>
+        <% }else{ %>
+        <li><a href="/login" title="登录">登录</a></li>
+        <!-- <li><a href="/reg" title="注册">注册</a></li> -->
+        <% } %>
+      </ul>
+    </div>
+
+    <div class="widget">
+      <h2 class="widget-tit">关于</h2>
+      <div class="widget-cont">
+        <p>Node + Mongodb 博客程序</p>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-cont copyright">
+        <p>Copyright ©2014</p>
+        <p>All Rights Reserved. Powered By Jimco</p>
+      </div>
+    </div>
+
+  </div>

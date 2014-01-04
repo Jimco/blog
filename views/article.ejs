@@ -1,30 +1,46 @@
 <%- include header %>
 
-  <div class="xymain">
-    <%- include side %>
-    <div class="post-box">
-      <h1><%= post.title %></h1>
-      <div class="cont-meta">
-        <span class="author">作者：<a href="/u/<%= post.name %>" title="<%= post.name %>"><%= post.name %></a></span>
-        <span class="date">日期：<%= post.time.minute %></span>
-        <span class="tags">
-          标签：
-          <% post.tags.forEach(function(tag, index){ %>
-            <% if(tag){ %> <a class="tag" href="/tags/<%= tag %>"><%= tag %></a><% } %>
-          <% }) %>
-        </span>
-        <span class="views">浏览：<%= post.pv %></span>
-        <span class="commnums">评论：<%= post.comments.length %></span>
-        <% if(user && (user.name === post.name)){ %>
-        <span class="edit"><a href="/edit/<%= post._id %>">编辑</a></span>
-        <span class="delete"><a href="/remove/<%= post._id %>">删除</a></span>
-        <% } %>
+  <%- include side %>
+  
+  <div class="main-wrap">
+    <div class="main-top">
+      <!-- <div class="global-tip"><p>登录成功！ / 登录失败！ / 网络忙，请稍后重试！</p></div> -->
+      <% if(success){ %><div class="global-tip"><p><%= success%></p></div><% } %>
+      <% if(error){ %><div class="global-tip"><p><%= error%></p></div><% } %>
+      <div class="timer">
+        <span class="time_section"><span class="time_amount">20</span><br>January</span>
+        <span class="time_section"><span class="time_amount">13</span><br>Hour</span>
+        <span class="time_section"><span class="time_amount">20</span><br>Minute</span>
+        <span class="time_section"><span class="time_amount">14</span><br>Second</span>
       </div>
-      <div class="cont-desc">
-        <%- post.post %>
-      </div>
+    </div>
 
-      <%- include comment %>
+    <div class="post-wrap">
+      <div class="post-box">
+        <h1 class="cont-tit"><%= post.title %></h1>
+
+        <div class="cont-meta">
+          <!-- <span class="author">
+            <span class="headface"><img src="../public/upload/1084-mbugoq.jpg" width="35px" height="35px" alt="Jimco"></span>
+            <a href="/u/Jimco" title="Jimco">Jimco</a>
+          </span> -->
+          <span class="tags">
+            Tags: 
+            <% post.tags.forEach(function(tag, index){ %>
+              <% if(tag){ %> <a href="/tags/<%= tag %>"><%= tag %></a><% } %>
+            <% }) %>
+          </span>
+          <span class="date"><%= post.time.minute %></span>
+          <span class="views"><%= post.pv %> 浏览</span>
+          <span class="commnums"><%= post.comments.length %> 评论</span>
+        </div>
+
+        <div class="cont-desc">
+          <%- post.post %>
+        </div>
+
+        <%- include comment %>
+      </div>
     </div>
   </div>
 

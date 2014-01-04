@@ -1,24 +1,21 @@
 <%- include header %>
 
-  <div class="xymain">
-    <%- include side %>
-    
-    <div class="main-wrap">
-      <ul>
-      <% var lastYear = 0; %>
-      <% posts.forEach(function(post, index){ %>
-        <% if(lastYear != post.time.year){ %>
-        <li><h3><%= post.time.year %></h3></li>
-        <% lastYear = post.time.year } %>
-        <li>
-          <a href="/post/<%= post._id %>"><%= post.title %></a>
-          <span>( <%= post.time.day %> )</span>
-        </li>
-      <% }) %>
-      </ul>
+  <%- include side %>
+  
+  <div class="main-wrap">
+    <ul>
+    <% var lastYear = 0; %>
+    <% posts.forEach(function(post, index){ %>
+      <% if(lastYear != post.time.year){ %>
+      <li><h3><%= post.time.year %></h3></li>
+      <% lastYear = post.time.year } %>
+      <li>
+        <a href="/post/<%= post._id %>"><%= post.title %></a>
+        <span>( <%= post.time.day %> )</span>
+      </li>
+    <% }) %>
+    </ul>
 
-    </div>
-    
   </div>
 
 <%- include footer %>
