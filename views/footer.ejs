@@ -3,30 +3,39 @@
   <script src="/js/jquery-1.8.3.min.js"></script>
   <script src="/js/sea.js"></script>
   <script>
-    jQuery(function($){
-      setInterval(
-        function() {
-          var date = new Date();
-          var aMonth = new Array("January","February","March","April","May","June","July","August","September","October","November","December")
-          var days = date.getDate();
-          var months = date.getMonth();
-          var seconds = date.getSeconds();
-          var minutes = date.getMinutes();
-          var hours = date.getHours();
-          printTime(days,aMonth[months],hours,minutes,seconds);
-        }, 1000
-      );
-      function printTime(days, months, hours, minutes, seconds){
-        var inner = '';
-        inner += '<span class="time_section"><span class="time_amount">'+days+'</span><br>'+months+'</span>';
-        inner += '<span class="time_section"><span class="time_amount">'+hours+'</span><br>Hour</span>';
-        inner += '<span class="time_section"><span class="time_amount">'+minutes+'</span><br>Minute</span>';
-        inner += '<span class="time_section"><span class="time_amount">'+seconds+'</span><br>Second</span>';
-        $('.timer').html(inner);
+    seajs.config({
+      alias: {
+        'main': location.search.indexOf('debug') > -1 ? 'src/main' : 'src/main'
       }
-
-      // jQuery('div.box').fadeIn(150);
     });
+
+    // 加载入口模块
+    seajs.use('main');
+    
+    // jQuery(function($){
+    //   setInterval(
+    //     function() {
+    //       var date = new Date();
+    //       var aMonth = new Array("January","February","March","April","May","June","July","August","September","October","November","December")
+    //       var days = date.getDate();
+    //       var months = date.getMonth();
+    //       var seconds = date.getSeconds();
+    //       var minutes = date.getMinutes();
+    //       var hours = date.getHours();
+    //       printTime(days,aMonth[months],hours,minutes,seconds);
+    //     }, 1000
+    //   );
+    //   function printTime(days, months, hours, minutes, seconds){
+    //     var inner = '';
+    //     inner += '<span class="time_section"><span class="time_amount">'+days+'</span><br>'+months+'</span>';
+    //     inner += '<span class="time_section"><span class="time_amount">'+hours+'</span><br>Hour</span>';
+    //     inner += '<span class="time_section"><span class="time_amount">'+minutes+'</span><br>Minute</span>';
+    //     inner += '<span class="time_section"><span class="time_amount">'+seconds+'</span><br>Second</span>';
+    //     $('.timer').html(inner);
+    //   }
+
+    //   // jQuery('div.box').fadeIn(150);
+    // });
   </script>
 </body>
 </html>

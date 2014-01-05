@@ -25,7 +25,7 @@
 
             <div class="pb-title-holder">
               <h3 class="pb-title">标签 <span>( 多个标签以空格分开 )</span></h3>
-              <input type="text" class="pb-title-input" name="tag1" value="<%= post.tags[0] %> <%= post.tags[1] %> <%= post.tags[2] %>" disabled="disabled">
+              <input type="text" class="pb-title-input" name="tags" value="<%= post.tags[0] || '' %> <%= post.tags[1] || '' %> <%= post.tags[2] || '' %>" disabled="disabled">
             </div>
 
             <div class="pb-post-holder">

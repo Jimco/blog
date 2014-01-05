@@ -59,7 +59,7 @@ module.exports = function(app){
   app.post('/post', checkLogin);
   app.post('/post', function (req, res) {
     var currentUser = req.session.user
-      , tags = [ req.body.tag1, req.body.tag2, req.body.tag3 ]
+      , tags = req.body.tags.split(' ') // [ req.body.tag1, req.body.tag2, req.body.tag3 ]
       , post = new Post(currentUser.name, currentUser.headface, req.body.title, tags, req.body.post);
 
     post.save(function(err){
@@ -70,6 +70,44 @@ module.exports = function(app){
 
       req.flash('success', '发布成功！');
       res.redirect('/');
+    });
+  });
+
+
+  // 编辑页面
+  app.get('/edit/:_id', checkLogin);
+  app.get('/edit/:_id', function(req, res){
+    var currentUser = req.session.user;
+
+    Post.edit(req.params._id, function(err, post){
+      if(err){
+        req.flash('error', err);
+        return res.redirect('back');
+      }
+
+      res.render('edit', {
+        title: '编辑',
+        post: post,
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+    });
+  });
+
+  app.post('/edit/:_id', checkLogin);
+  app.post('/edit/:_id', function(req, res){
+
+    Post.update(req.params._id, req.body.post, function(err){
+      var url = '/post/' + req.params._id;
+
+      if(err){
+        req.flash('error', err);
+        return res.redirect(url);
+      }
+
+      req.flash('success', '修改成功！');
+      res.redirect(url);
     });
   });
 
@@ -206,44 +244,6 @@ module.exports = function(app){
 
       req.flash('success', '留言成功！');
       res.redirect('back');
-    });
-  });
-
-
-  // 编辑页面
-  app.get('/edit/:_id', checkLogin);
-  app.get('/edit/:_id', function(req, res){
-    var currentUser = req.session.user;
-
-    Post.edit(req.params._id, function(err, post){
-      if(err){
-        req.flash('error', err);
-        return res.redirect('back');
-      }
-
-      res.render('edit', {
-        title: '编辑',
-        post: post,
-        user: req.session.user,
-        success: req.flash('success').toString(),
-        error: req.flash('error').toString()
-      });
-    });
-  });
-
-  app.post('/edit/:_id', checkLogin);
-  app.post('/edit/:_id', function(req, res){
-
-    Post.update(req.params._id, req.body.post, function(err){
-      var url = '/post/' + req.params._id;
-
-      if(err){
-        req.flash('error', err);
-        return res.redirect(url);
-      }
-
-      req.flash('success', '修改成功！');
-      res.redirect(url);
     });
   });
 
