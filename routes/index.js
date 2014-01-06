@@ -98,7 +98,7 @@ module.exports = function(app){
   app.post('/edit/:_id', checkLogin);
   app.post('/edit/:_id', function(req, res){
 
-    Post.update(req.params._id, req.body.post, function(err){
+    Post.update(req.params._id, req.body.title, req.body.tags.split(' '), req.body.post, function(err){
       var url = '/post/' + req.params._id;
 
       if(err){

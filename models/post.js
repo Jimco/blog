@@ -215,7 +215,7 @@ Post.edit = function(_id, callback) {
 };
 
 // 更新内容
-Post.update = function(_id, post, callback){
+Post.update = function(_id, title, tags, post, callback){
   mongodb.open(function(err, db){
     if(err) return callback(err);
     
@@ -228,7 +228,11 @@ Post.update = function(_id, post, callback){
       collection.update({
         "_id": new ObjectID(_id)
       }, {
-        $set: {post: post}
+        $set: {
+          title: title,
+          tags: tags,
+          post: post
+        }
       }, function (err) {
         mongodb.close();
         if(err) return callback(err);
