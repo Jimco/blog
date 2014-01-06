@@ -10,7 +10,7 @@ body{background:#DADEE2;}
 .pb-title span, .pb-mod-title span{font-size:12px;color:#c7c7c7;}
 .pb-title-input, .pb-text-area{width:602px;padding:7px;border:1px solid #ddd;border-top:1px solid #ebebeb;border-bottom:1px solid #b7b7b7;border-radius:3px;}
 .pb-title-input{line-height:24px;font-size:18px;}
-.pb-text-area{height:315px;resize:vertical;}
+.pb-text-area{height:315px;font-size:14px;line-height:2em;resize:vertical;}
 
 .pb-opt-holder{margin:20px 0 0;}
 .pb-cancel, .pb-submit{display:inline-block;width:75px;height:32px;line-height:32px;background:#E3E3E3;text-align:center;color:#7c7c7c;border-radius:3px;}
