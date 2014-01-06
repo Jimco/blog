@@ -155,7 +155,7 @@ Post.getTen = function(name, page, callback){
           mongodb.close();
           if(err) return callback(err);
           docs.forEach(function(doc){
-            doc.post = markdown.toHTML(doc.post);
+            doc.post = markdown.toHTML(doc.post).substr(0, 160) + ' ...';
           });
 
           callback(null, docs, total);
