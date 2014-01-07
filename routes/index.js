@@ -320,6 +320,12 @@ module.exports = function(app){
   });
 
 
+  // 评论接口
+  app.post('/comment', function(req, res){
+    
+  });
+
+
   // 上传页面
   app.get('/upload', checkLogin);
   app.get('/upload', function (req,res){
