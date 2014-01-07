@@ -196,32 +196,31 @@ Post.getOne = function(_id, callback){
       collection.findOne({
         "_id": new ObjectID(_id)
       }, function(err, doc){
-        cb(err, doc);
+        cb(err, collection, doc);
       });
+    },
+    function(collection, doc, cb){
+      if(doc){
+        // pv+1
+        collection.update({
+          "_id": new ObjectID(_id)
+        }, {
+          $inc: { "pv": 1 }
+        }, function(err){
+          cb(err, doc)
+        });
+      }        
     }
   ], function(err, doc){
-    if(err){
-      mongodb.close();
-      return callback(err);
-    }
-    if(doc){
-      // pv+1
-      collection.update({
-        "_id": new ObjectID(_id)
-      }, {
-        $inc: {"pv": 1}
-      }, function(err){
-        mongodb.close();
-        if(err) return callback(err);
-      });
+    mongodb.close();
+    if(err) return callback(err);
 
-      doc.post = markdown.toHTML(doc.post);
-      doc.comments.forEach(function(comment){
-        comment.content = markdown.toHTML(comment.content);
-      });
-    }
+    doc.post = markdown.toHTML(doc.post);
+    doc.comments.forEach(function(comment){
+      comment.content = markdown.toHTML(comment.content);
+    });
     callback(null, doc);
-  })
+  });
 
 };
 
