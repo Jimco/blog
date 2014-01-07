@@ -85,109 +85,218 @@ Post.prototype.save = function(callback){
 
 // 读取所有文章
 Post.getAll = function(name, callback){
-  mongodb.open(function(err, db){
-    if(err) return callback(err);
+  // mongodb.open(function(err, db){
+  //   if(err) return callback(err);
 
-    // 读取 posts 集合
-    db.collection('posts', function(err, collection){
-      if(err){
-        mongodb.close();
-        return callback(err);
-      }
+  //   // 读取 posts 集合
+  //   db.collection('posts', function(err, collection){
+  //     if(err){
+  //       mongodb.close();
+  //       return callback(err);
+  //     }
 
-      var query = {};
+  //     var query = {};
 
-      if(name) query.name = name;
+  //     if(name) query.name = name;
 
-      // 根据 query 对象查询文章
-      collection.find(query).sort({ time: -1 }).toArray(function(err, docs){
-        mongodb.close();
-        if(err) return callback(err);
+  //     // 根据 query 对象查询文章
+  //     collection.find(query).sort({ time: -1 }).toArray(function(err, docs){
+  //       mongodb.close();
+  //       if(err) return callback(err);
 
-        console.log(docs);
-        docs.forEach(function(doc){
-          doc.post = markdown.toHTML(doc.post);
-        });
+  //       console.log(docs);
+  //       docs.forEach(function(doc){
+  //         doc.post = markdown.toHTML(doc.post);
+  //       });
         
-        callback(null, docs);
+  //       callback(null, docs);
+  //     });
+  //   });
+  // });
+
+  async.waterfall([
+    function(cb){
+      mongodb.open(function(err, db){
+        cb(err, db);
       });
+    },
+    function(db, cb){
+      db.collection('posts', function(err, collection){
+        cb(err, collection);
+      });
+    },
+    function(collection, cb){
+      collection.find(query).sort({ time: -1 }).toArray(function(err, docs){
+        cb(err, docs);
+      });
+    }
+  ], function(err, docs){
+    mongodb.close();
+    if(err) callback(err);
+    docs.forEach(function(doc){
+      doc.post = markdown.toHTML(doc.post);
     });
+    
+    callback(null, docs);
   });
+
 };
 
 // 读取1篇文章
 Post.getOne = function(_id, callback){
-  mongodb.open(function(err, db){
-    if(err) return callback(err);
+  // mongodb.open(function(err, db){
+  //   if(err) return callback(err);
 
-    db.collection('posts', function(err, collection){
-      if(err){
-        mongodb.close();
-        return callback(err);
-      }
+  //   db.collection('posts', function(err, collection){
+  //     if(err){
+  //       mongodb.close();
+  //       return callback(err);
+  //     }
 
+  //     collection.findOne({
+  //       "_id": new ObjectID(_id)
+  //     }, function(err, doc){
+  //       if(err){
+  //         mongodb.close();
+  //         return callback(err);
+  //       }
+  //       if(doc){
+  //         // pv+1
+  //         collection.update({
+  //           "_id": new ObjectID(_id)
+  //         }, {
+  //           $inc: {"pv": 1}
+  //         }, function(err){
+  //           mongodb.close();
+  //           if(err) return callback(err);
+  //         });
+
+  //         doc.post = markdown.toHTML(doc.post);
+  //         doc.comments.forEach(function(comment){
+  //           comment.content = markdown.toHTML(comment.content);
+  //         });
+  //       }
+  //       callback(null, doc);
+  //     });
+  //   });
+  // });
+
+  async.waterfall([
+    function(cb){
+      mongodb.open(function(err, db){
+        cb(err, db);
+      });
+    },
+    function(db, cb){
+      db.collection('posts', function(err, collection){
+        cb(err, collection);
+      });
+    },
+    function(collection, cb){
       collection.findOne({
         "_id": new ObjectID(_id)
       }, function(err, doc){
-        if(err){
-          mongodb.close();
-          return callback(err);
-        }
-        if(doc){
-          // pv+1
-          collection.update({
-            "_id": new ObjectID(_id)
-          }, {
-            $inc: {"pv": 1}
-          }, function(err){
-            mongodb.close();
-            if(err) return callback(err);
-          });
-
-          doc.post = markdown.toHTML(doc.post);
-          doc.comments.forEach(function(comment){
-            comment.content = markdown.toHTML(comment.content);
-          });
-        }
-        callback(null, doc);
+        cb(err, doc);
       });
-    });
-  });
+    }
+  ], function(err, doc){
+    if(err){
+      mongodb.close();
+      return callback(err);
+    }
+    if(doc){
+      // pv+1
+      collection.update({
+        "_id": new ObjectID(_id)
+      }, {
+        $inc: {"pv": 1}
+      }, function(err){
+        mongodb.close();
+        if(err) return callback(err);
+      });
+
+      doc.post = markdown.toHTML(doc.post);
+      doc.comments.forEach(function(comment){
+        comment.content = markdown.toHTML(comment.content);
+      });
+    }
+    callback(null, doc);
+  })
+
 };
 
 // 读取10篇文章
 Post.getTen = function(name, page, callback){
-  mongodb.open(function(err, db){
-    if(err) return callback(err);
+  // mongodb.open(function(err, db){
+  //   if(err) return callback(err);
 
-    db.collection('posts', function(err, collection){
-      if(err){
-        mongodb.close();
-        return callback(err);
-      }
+  //   db.collection('posts', function(err, collection){
+  //     if(err){
+  //       mongodb.close();
+  //       return callback(err);
+  //     }
 
-      var query = {};
-      if(name) query.name = name;
+  //     var query = {};
+  //     if(name) query.name = name;
 
-      collection.count(query, function(err, total){
-        // 根据 query 对象查询，并跳过前 (page - 1)*
-        collection.find(query, {
-          skip: (page - 1)*10,
-          limit: 10
-        }).sort({
-          time: -1
-        }).toArray(function(err, docs){
-          mongodb.close();
-          if(err) return callback(err);
-          docs.forEach(function(doc){
-            doc.post = markdown.toHTML(doc.post).substr(0, 160) + ' ...';
-          });
+  //     collection.count(query, function(err, total){
+  //       // 根据 query 对象查询，并跳过前 (page - 1)*
+  //       collection.find(query, {
+  //         skip: (page - 1)*10,
+  //         limit: 10
+  //       }).sort({
+  //         time: -1
+  //       }).toArray(function(err, docs){
+  //         mongodb.close();
+  //         if(err) return callback(err);
+  //         docs.forEach(function(doc){
+  //           doc.post = markdown.toHTML(doc.post).substr(0, 160) + ' ...';
+  //         });
 
-          callback(null, docs, total);
-        });
+  //         callback(null, docs, total);
+  //       });
+  //     });
+  //   });
+  // });
+  var query = {};
+  if(name) query.name = name;
+
+  async.waterfall([
+    function(cb){
+      mongodb.open(function(err, db){
+        cb(err, db);
       });
+    },
+    function(db, cb){
+      db.collection('posts', function(err, collection){
+        cb(err, collection);
+      });
+    },
+    function(collection, cb){
+      collection.count(query, function(err, total){
+        cb(err, collection, total);
+      });
+    },
+    function(collection, total, cb){
+      collection.find(query, {
+        skip: (page - 1)*10,
+        limit: 10
+      }).sort({
+        time: -1
+      }).toArray(function(err, docs){
+        cb(err, docs, total);
+      })
+    }
+  ], function(err, docs, total){
+    mongodb.close();
+    if(err) return callback(err);
+    docs.forEach(function(doc){
+      doc.post = markdown.toHTML(doc.post).substr(0, 160) + ' ...';
     });
+
+    callback(null, docs, total);
   });
+
 }
 
 // 读取文章存档信息
