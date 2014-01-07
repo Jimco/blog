@@ -1,6 +1,7 @@
 var mongodb = require('./db')
   , markdown = require('markdown').markdown
-  , ObjectID = require('mongodb').ObjectID;
+  , ObjectID = require('mongodb').ObjectID
+  , async = require('async');
 
 function Post(name, headface, title, tags, post){
   this.name = name;
@@ -36,26 +37,50 @@ Post.prototype.save = function(callback){
     };
 
   // 打开数据库
-  mongodb.open(function(err, db){
-    if(err) return callback(err);
+  // mongodb.open(function(err, db){
+  //   if(err) return callback(err);
 
-    // 读取 posts 集合
-    db.collection('posts', function(err, collection){
-      if(err){
-        mongodb.close();
-        return callback(err);
-      }
+  //   // 读取 posts 集合
+  //   db.collection('posts', function(err, collection){
+  //     if(err){
+  //       mongodb.close();
+  //       return callback(err);
+  //     }
 
-      // 将文档插入 posts 集合
+  //     // 将文档插入 posts 集合
+  //     collection.insert(post, {
+  //       safe: true
+  //     }, function(err){
+  //       mongodb.close();
+  //       if(err) return callback(err);
+  //       callback(null);
+  //     });
+  //   });
+  // });
+
+  async.waterfall([
+    function(cb){
+      mongodb.open(function(err, db){
+        cb(err, db);
+      });
+    },
+    function(db, cb){
+      db.collection('posts', function(err, collection){
+        cb(err, collection);
+      });
+    },
+    function(collection, cb){
       collection.insert(post, {
         safe: true
       }, function(err){
-        mongodb.close();
-        if(err) return callback(err);
-        callback(null);
+        cb(err);
       });
-    });
+    }
+  ], function(err){
+    mongodb.close();
+    callback(err);
   });
+
 };
 
 // 读取所有文章

@@ -12,6 +12,7 @@
     "connect-mongo": "*",
     "connect-flash": "*",
     "markdown": "*",
+     "async": "*",
     "grunt": "*",
     "grunt-cmd-transport": "~0.3.0",
     "grunt-cmd-concat": "0.2.5",
