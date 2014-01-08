@@ -42,6 +42,14 @@ module.exports = function(grunt) {
           dest: 'static/js/.tmp2',        // 合并后的存放路径
           ext: '.js'                      // 合并后的扩展名
         }]
+      },
+      common: {
+        files: [{
+          expand: true,
+          cwd: 'static/lib',
+          src: '*.js',
+          dest: 'static/js/dist/lib'
+        }]
       }
     },
     // 压缩
