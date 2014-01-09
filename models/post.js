@@ -16,13 +16,19 @@ module.exports = Post;
 // 存储文章及相关信息
 Post.prototype.save = function(callback){
   var date = new Date()
+    , zeroComplet = function(s){ return s < 10 ? '0' + s : s; }
+    , days = zeroComplet(date.getDate()),
+    , year = date.getFullYear()
+    , month = zeroComplet(date.getMonth()+1),
+    , day = date.getDate()
+    , hour = zeroComplet(date.getHours())
+    , minute = zeroComplet(date.getMinutes()),
     , time = {
       date: date,
-      year: date.getFullYear(),
-      month: date.getFullYear() + '-' + (date.getMonth() + 1),
-      day: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
-      minute: date.getFullYear() + '-' + (date.getMonth() + 1) + "-" + date.getDate() + ' ' + 
-      date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())  
+      year: year,
+      month: year + '-' + month,
+      day: year + '-' + month + '-' + day,
+      minute: year + '-' + month + "-" + day + ' ' + hour + ':' + minute 
     };
 
   var post = {
