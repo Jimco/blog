@@ -17,12 +17,12 @@ module.exports = Post;
 Post.prototype.save = function(callback){
   var date = new Date()
     , zeroComplet = function(s){ return s < 10 ? '0' + s : s; }
-    , days = zeroComplet(date.getDate()),
+    , days = zeroComplet(date.getDate())
     , year = date.getFullYear()
-    , month = zeroComplet(date.getMonth()+1),
+    , month = zeroComplet(date.getMonth()+1)
     , day = date.getDate()
     , hour = zeroComplet(date.getHours())
-    , minute = zeroComplet(date.getMinutes()),
+    , minute = zeroComplet(date.getMinutes())
     , time = {
       date: date,
       year: year,
