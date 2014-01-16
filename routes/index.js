@@ -222,16 +222,19 @@ module.exports = function(app){
       , time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
       , md5 = crypto.createHash('md5')
       , email_MD5 = md5.update(req.body.email.toLowerCase()).digest('hex')
-      , headface = 'http://www.gravatar.com/avatar/' + email_MD5 +'?s=48';
+      , headface = 'http://www.gravatar.com/avatar/' + email_MD5 +'?s=48'
+      , content = req.body.content;
 
+    if(!content) res.redirect('back');
     var comment = {
+        contentid: req.params._id,
+        parentid: req.body.parentid || 0,
         name: req.body.name,
         headface: headface,
         email: req.body.email,
         website: req.body.website,
         time: time,
-        content: req.body.content,
-        subcomments: []
+        content: req.body.content
       }
 
     var newComment = new Comment(req.params._id, comment);
@@ -321,7 +324,44 @@ module.exports = function(app){
 
 
   // 评论接口
-  app.post('/comment', function(req, res){
+  app.post('/comment/addcmt', function(req, res){
+    var date = new Date()
+      , time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
+      , md5 = crypto.createHash('md5')
+      , email_MD5 = md5.update(req.body.email.toLowerCase()).digest('hex')
+      , headface = 'http://www.gravatar.com/avatar/' + email_MD5 +'?s=48'
+      , content = req.body.content;
+
+    if(!content) res.redirect('back');
+    var comment = {
+        contentid: req.body.contentid,
+        parentid: req.body.parentid || 0,
+        name: req.body.name,
+        headface: headface,
+        email: req.body.email,
+        website: req.body.website,
+        time: time,
+        content: req.body.content
+      }
+
+    var newComment = new Comment(req.params._id, comment);
+
+    newComment.save(function(err){
+      if(err){
+        req.flash('error', err);
+        return res.redirect('back');
+      }
+
+      req.flash('success', '留言成功！');
+      res.redirect('back');
+    });
+  });
+
+  app.post('/comment/delcmt', function(req, res){
+
+  });
+
+  app.post('/comment/upcmt', function(req, res){
     
   });
 
@@ -395,7 +435,7 @@ module.exports = function(app){
     User.get(newUser.name, function(err, user){
       if(user){
         req.flash('error', '用户已存在！');
-        console.log('error', '用户已存在！', user);
+        // console.log('error', '用户已存在！', user);
         return res.redirect('/reg');
       }
 
@@ -406,7 +446,7 @@ module.exports = function(app){
         }
         req.session.user = user;
         req.flash('success', '注册成功!');
-        console.log('success', '注册成功!', user);
+        // console.log('success', '注册成功!', user);
         res.redirect('/');
       });
     });

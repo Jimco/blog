@@ -18,22 +18,30 @@ Comment.prototype.save = function(callback){
   mongodb.open(function(err, db){
     if(err) return callback(err);
 
-    db.collection('posts', function(err, collection){
+    db.collection('comments', function(err, collection){
       if(err){
         mongodb.close();
         return callback(err);
       }
 
       // console.log(_id);
-      collection.update({
-        "_id": new ObjectID(_id)
-      }, {
-        $push: {"comments": comment}
-      }, function(err){
+      // collection.update({
+      //   "_id": new ObjectID(_id)
+      // }, {
+      //   $push: {"comments": comment}
+      // }, function(err){
+      //   mongodb.close();
+      //   if(err) return callback(err);
+      //   callback(null);
+      // });
+      collection.insert(comment, {
+        safe: true
+      }, function(err, comment){
         mongodb.close();
         if(err) return callback(err);
-        callback(null);
+        callback(null, comment[0]);
       });
+
     });
   });
 }
