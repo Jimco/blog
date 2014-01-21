@@ -52,7 +52,7 @@ User.prototype.save = function(callback){
     },
     function(db, cb){
       db.collection('users', function(err, collection){
-        cb(err, cb)
+        cb(err, collection);
       });
     },
     function(collection, cb){
