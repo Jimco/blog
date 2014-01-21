@@ -195,14 +195,23 @@ Post.getOne = function(_id, callback){
     },
     function(db, cb){
       db.collection('posts', function(err, collection){
-        cb(err, collection);
+        collection.findOne({
+          "_id": new ObjectID(_id)
+        }, function(err, doc){
+          cb(err, db, collection, doc);
+        });
       });
     },
-    function(collection, cb){
-      collection.findOne({
-        "_id": new ObjectID(_id)
-      }, function(err, doc){
-        cb(err, collection, doc);
+    function(db, postColl, postDoc, cb){
+      db.collection('comments', function(err, cmtColl){
+        cmtColl.find({
+          "contentid": _id
+        })
+        .sort({ time: -1 })
+        .toArray(function(err, docs){
+          postDoc.comments = docs;
+          cb(err, postColl, postDoc);
+        });
       });
     },
     function(collection, doc, cb){
