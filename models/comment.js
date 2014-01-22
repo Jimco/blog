@@ -45,3 +45,48 @@ Comment.prototype.save = function(callback){
     });
   });
 }
+
+Comment.remove = function(_id, callback){
+  mongodb.open(function(err, db){
+    if(err) return callback(err);
+
+    db.collection('comments', function(err, collection){
+      if(err){
+        mongodb.close();
+        return callback(err);
+      }
+
+      collection.remove({
+        "_id": new ObjectID(_id)
+      }, {
+        w: 1
+      }, function(err){
+        mongodb.close();
+        if(err) return callback(err);
+        callback(null);
+      });
+    });
+  });
+}
+
+Comment.upvote = function(_id, callback){
+  mongodb.open(function(err, db){
+    if(err) return callback(err);
+
+    db.collection('comments', function(err, collection){
+      if(err){
+        mongodb.close();
+        return callback(err);
+      }
+
+      collection.update({
+        "_id": new ObjectID(_id)
+      }, {
+        $inc: { "upvote": 1 }
+      }, function(err){
+        mongodb.close();
+        if(err) return callback(err);
+      });
+    });
+  });
+}

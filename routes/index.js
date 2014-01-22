@@ -341,6 +341,7 @@ module.exports = function(app){
         email: req.body.email,
         website: req.body.website,
         time: time,
+        upvote: 0,
         content: req.body.content
       }
 
@@ -352,7 +353,7 @@ module.exports = function(app){
         return res.redirect('back');
       }
 
-      req.flash('success', '留言成功！');
+      // req.flash('success', '留言成功！');
       res.redirect('back');
     });
   });
