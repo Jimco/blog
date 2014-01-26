@@ -70,6 +70,8 @@ Comment.remove = function(_id, callback){
 }
 
 Comment.upvote = function(_id, callback){
+  var _id = new ObjectID(_id);
+
   mongodb.open(function(err, db){
     if(err) return callback(err);
 
@@ -80,12 +82,20 @@ Comment.upvote = function(_id, callback){
       }
 
       collection.update({
-        "_id": new ObjectID(_id)
+        "_id": _id
       }, {
         $inc: { "upvote": 1 }
       }, function(err){
-        mongodb.close();
         if(err) return callback(err);
+
+        collection.findOne({
+          "_id": _id
+        }, function(err, item){
+          mongodb.close();
+          if(err) callback(err);
+          callback(err, item.upvote);
+        });
+        
       });
     });
   });

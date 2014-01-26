@@ -358,12 +358,30 @@ module.exports = function(app){
     });
   });
 
+  app.post('/comment/delcmt', checkLogin);
   app.post('/comment/delcmt', function(req, res){
+    Comment.remove(req.body._id, function(err){
+      if(err){
+        req.flash('error', err);
+        return res.redirect('back');
+      }
 
+      req.flash('success', '删除成功！');
+      res.redirect('/');
+    });
   });
 
+  // app.post('/comment/upcmt', checkLogin);
   app.post('/comment/upcmt', function(req, res){
-    
+    Comment.upvote(req.body._id, function(err, votes){
+      if(err){
+        req.flash('error', err);
+        return res.redirect('back');
+      }
+
+      req.flash('success', '赞成功！');
+      res.send(1, { upvote: votes });
+    });
   });
 
 
