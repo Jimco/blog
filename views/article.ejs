@@ -9,7 +9,7 @@
       <% if(error){ %><div class="global-tip"><p><%= error%></p></div><% } %>
       <% if(user){ %>
         <div class="post-opt">
-          <a class="icon delete-btn" href="/delete/<%= post._id %>" title="删除">删除</a><a class="icon edit-btn" href="/edit/<%= post._id %>" title="编辑">编辑</a><a class="icon home-btn" href="/" title="返回首页">返回首页</a>
+          <a class="icon delete-btn" href="/remove/<%= post._id %>" title="删除">删除</a><a class="icon edit-btn" href="/edit/<%= post._id %>" title="编辑">编辑</a><a class="icon home-btn" href="/" title="返回首页">返回首页</a>
         </div>
       <% } %>
       <div class="timer">

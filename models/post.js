@@ -427,11 +427,11 @@ Post.remove = function(_id, callback){
         }, {
           w: 1
         }, function(err){
-          cb(err);
+          cb(err, db);
         });
       });
     },
-    function(cb){
+    function(db, cb){
       db.collection('comments', function(err, collection){
         collection.remove({
           "contentid": _id
