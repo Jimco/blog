@@ -392,26 +392,63 @@ Post.update = function(_id, title, tags, post, callback){
 
 // 删除内容
 Post.remove = function(_id, callback){
-  mongodb.open(function(err, db){
-    if(err) return callback(err);
+  // mongodb.open(function(err, db){
+  //   if(err) return callback(err);
 
-    db.collection('posts', function(err, collection){
-      if(err){
-        mongodb.close();
-        return callback(err);
-      }
+  //   db.collection('posts', function(err, collection){
+  //     if(err){
+  //       mongodb.close();
+  //       return callback(err);
+  //     }
 
-      collection.remove({
-        "_id": new ObjectID(_id)
-      }, {
-        w: 1
-      }, function(err){
-        mongodb.close();
-        if(err) return callback(err);
-        callback(null);
+  //     collection.remove({
+  //       "_id": new ObjectID(_id)
+  //     }, {
+  //       w: 1
+  //     }, function(err){
+  //       mongodb.close();
+  //       if(err) return callback(err);
+  //       callback(null);
+  //     });
+  //   });
+
+  // });
+
+  async.waterfall([
+    function(cb){
+      mongodb.open(function(err, db){
+        cb(err, db);
       });
-    });
+    },
+    function(db, cb){
+      db.collection('posts', function(err, collection){
+        collection.remove({
+          "_id": new ObjectID(_id)
+        }, {
+          w: 1
+        }, function(err){
+          cb(err);
+        });
+      });
+    },
+    function(cb){
+      db.collection('comments', function(err, collection){
+        collection.remove({
+          "contentid": _id
+        }, {
+          w: 1
+        }, function(err){
+          cb(err);
+        });
+      });
+    }
+
+  ], function(err){
+    mongodb.close();
+    if(err) callback(err);
+    callback(null);
   });
+
 };
 
 // 读取所有标签
