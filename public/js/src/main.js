@@ -11,7 +11,7 @@ define(function(require, exports, module){
   // placeholder 兼容插件调用
   $('input[placeholder], textarea[placeholder]').placeholder();
 
-  timer($('.timer')[0]);
+  if($('.timer').size()) timer($('.timer')[0]);
 
 
 
