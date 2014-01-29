@@ -44,12 +44,12 @@ module.exports = function(grunt) {
         }]
       },
       common: {
-        files: [{
-          expand: true,
-          cwd: 'public/js',
-          src: ['jquery-1.8.3.min.js', 'sea.js'],
-          dest: 'public/js/dist/lib'
-        }]
+        options: {
+          noncmd: true
+        },
+        files: {
+          'public/js/dist/lib/common.js': ['public/js/jquery-1.8.3.min.js', 'public/js/sea.js']
+        }
       }
     },
     // 压缩
