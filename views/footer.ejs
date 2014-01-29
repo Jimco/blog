@@ -1,11 +1,13 @@
   </div>
-  
+  <!--
   <script src="/js/jquery-1.8.3.min.js"></script>
-  <script src="/js/sea.js"></script>
+  <script src="/js/sea.js"></script> 
+  -->
+  <script src="/js/common.js"></script>
   <script>
     seajs.config({
       alias: {
-        'main': location.search.indexOf('debug') > -1 ? 'src/main' : 'dist/main'
+        'main': location.search.indexOf('debug') > -1 ? './js/src/main' : './js/dist/main'
       }
     });
 

@@ -45,10 +45,10 @@ module.exports = function(grunt) {
       },
       common: {
         options: {
-          noncmd: true
+          noncmd: true  // If set true, it will be treated as a noncmd file
         },
         files: {
-          'public/js/dist/lib/common.js': ['public/js/jquery-1.8.3.min.js', 'public/js/sea.js']
+          'public/js/common.js': ['public/js/jquery-1.8.3.min.js', 'public/js/sea.js']
         }
       }
     },
@@ -87,13 +87,6 @@ module.exports = function(grunt) {
           src: '*.js',                  // 需要压缩的文件
           dest: 'public/js/dist',       // 压缩后的存放路径
           ext: '.js'                    // 压缩后的扩展名
-        }]
-      },
-      common: {
-        files:[{
-          cwd: 'public/js/lib',                 // 需要压缩的文件夹路径
-          src: 'common.js',                     // 需要压缩的文件
-          dest: 'public/js/dist/common'  // 压缩后的存放路径
         }]
       }
     }
